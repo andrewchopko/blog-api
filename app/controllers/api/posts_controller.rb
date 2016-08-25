@@ -1,4 +1,4 @@
-class api::PostController < ApplicationController
+class Api::PostsController < ApplicationController
 
   private
 
