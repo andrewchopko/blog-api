@@ -3,7 +3,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def index
+  helper_method :resource, :collection
+
+  rescue_from Mongoid::Errors::DocumentNotFound do |exception|
+    @exception = exception
+    render :exception
+  end
+
+  def new
     initialize_resource
   end
 
@@ -19,5 +26,6 @@ class ApplicationController < ActionController::Base
 
   def destroy
     resource.destroy!
+    head :ok
   end
 end
